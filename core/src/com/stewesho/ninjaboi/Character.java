@@ -18,7 +18,7 @@ public abstract class Character{
 
     public Character(int x, int y, String spritesheetPath){
         //clamp values based on map grid size
-        x = Math.max(1, Math.min(Map.WIDTH-1, x));
+        x = Math.max(1, Math.min(Map.WIDTH-2, x));
         y = Math.max(1, Math.min(Map.HEIGHT-1, y));
 
         //set coordinates
@@ -42,8 +42,8 @@ public abstract class Character{
      */
 
     public void setPixelCoords(float x, float y){
-        x = Math.max(64, Math.min(Map.PIXELWIDTH-64, x));
-        y = Math.max(64, Math.min(Map.PIXELHEIGHT-64, y));
+        x = Math.max(64, Math.min(Map.PIXELWIDTH-128, x));
+        y = Math.max(64, Math.min(Map.PIXELHEIGHT-128, y));
         this.pixelCoords.set(x, y);
     }
 
@@ -55,8 +55,8 @@ public abstract class Character{
         float x = this.pixelCoords.x + deltaX;
         float y = this.pixelCoords.y + deltaY;
         //clamp values
-        x = Math.max(64, Math.min(Map.PIXELWIDTH-64, x));
-        y = Math.max(64, Math.min(Map.PIXELHEIGHT-64, y));
+        x = Math.max(64, Math.min(Map.PIXELWIDTH-128, x));
+        y = Math.max(64, Math.min(Map.PIXELHEIGHT-128, y));
 
         this.pixelCoords.set(x, y);
         this.coords.set(Math.round(x/64 - -0.5), Math.round(y/64 - -0.5));
@@ -70,5 +70,7 @@ public abstract class Character{
 
     public float getPixelX() { return this.pixelCoords.x; }
     public float getPixelY() { return this.pixelCoords.y; }
+    public int getX() { return (int) this.coords.x; }
+    public int getY() { return (int) this.coords.y; }
     public Vector2 getPixelCoords() { return this.pixelCoords; }
 }

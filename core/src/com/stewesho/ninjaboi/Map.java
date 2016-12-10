@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 enum Tile{
     ICE(0),
-    WOOD(1),
+    FLOOR(1),
     WALL(2),
     TREASURE(3);
     //fields
@@ -29,8 +29,8 @@ enum Tile{
 public class Map{
     private Tile[][] map;
 
-    public static final int WIDTH  = 523;
-    public static final int HEIGHT = 523;
+    public static final int WIDTH  = 10;
+    public static final int HEIGHT = 10;
     public static final int PIXELWIDTH  = WIDTH * 64;
     public static final int PIXELHEIGHT = HEIGHT * 64;
 
@@ -43,20 +43,10 @@ public class Map{
             for (int i = 0; i < WIDTH; i++){
                 for (int j = 0; j < HEIGHT; j++){
                     try{
-                        switch ((i+j) % 4){
-                        case 0:
-                            map[i][j] = Tile.ICE;
-                            break;
-                        case 1:
-                            map[i][j] = Tile.WOOD;
-                            break;
-                        case 2:
+                        if ((i == WIDTH-1 || i == 0) || (j == HEIGHT-1 || j == 0) )
                             map[i][j] = Tile.WALL;
-                            break;
-                        case 3:
-                            map[i][j] = Tile.TREASURE;
-                            break;
-                        }
+                        else
+                            map[i][j] = Tile.FLOOR;
                     } catch (NullPointerException e){
                         Gdx.app.log("ERROR", "Map not initialized");
                     }
@@ -67,9 +57,9 @@ public class Map{
     public TextureRegion getTexture(int x, int y) {
         try{
             return this.map[x][y].getTexture();
-        } catch (NullPointerException e){
-            Gdx.app.log("ERROR", "Map not initialized");
-            return null;
+        } catch (ArrayIndexOutOfBoundsException e){
+            Gdx.app.log("ERROR", "Out of Bounds");
+            throw e;
         }
     }
 
