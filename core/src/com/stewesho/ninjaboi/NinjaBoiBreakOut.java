@@ -28,7 +28,7 @@ public class NinjaBoiBreakOut extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		player.control();
-		cam.position.set(player.getPixelX(), player.getPixelY(), 0);
+		cam.position.set(player.getPixelX()+32, player.getPixelY()+32, 0);
 		cam.update();
 
 		//render graphics
@@ -41,7 +41,8 @@ public class NinjaBoiBreakOut extends ApplicationAdapter {
             }
         }
 
-		batch.draw(player.getSprite(), player.getPixelX(), player.getPixelY());
+		//draws the player
+		player.getSprite().draw(batch);
 
 		batch.end();
 	}
