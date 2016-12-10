@@ -29,17 +29,19 @@ enum Tile{
 public class Map{
     private Tile[][] map;
 
-    public static final int MAPWIDTH  = 523;
-    public static final int MAPHEIGHT = 523;
+    public static final int WIDTH  = 523;
+    public static final int HEIGHT = 523;
+    public static final int PIXELWIDTH  = WIDTH * 64;
+    public static final int PIXELHEIGHT = HEIGHT * 64;
 
     public Map(){
-        map = new Tile[MAPWIDTH][MAPWIDTH];
+        map = new Tile[WIDTH][HEIGHT];
         initMap();
     }
 
     protected void initMap(){
-            for (int i = 0; i < MAPWIDTH; i++){
-                for (int j = 0; j < MAPHEIGHT; j++){
+            for (int i = 0; i < WIDTH; i++){
+                for (int j = 0; j < HEIGHT; j++){
                     try{
                         switch ((i+j) % 4){
                         case 0:

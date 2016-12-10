@@ -16,7 +16,7 @@ public class NinjaBoiBreakOut extends ApplicationAdapter {
 	public void create () {
 		batch = new SpriteBatch();
         map = new Map(); //level (just the one room)
-		player = new Player(12, 12);
+		player = new Player(2, 3);
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class NinjaBoiBreakOut extends ApplicationAdapter {
             }
         }
 
-		batch.draw(player.getSprite(), player.getX(), player.getY());
+		batch.draw(player.getSprite(), player.getPixelX(), player.getPixelY());
 
 		batch.end();
 	}

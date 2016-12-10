@@ -11,7 +11,7 @@ public class Player extends Character{
 
     private Vector2 mouseCoords;
 
-    public Player(float x, float y){
+    public Player(int x, int y){
         super(x, y, "art/boi.png");
         this.mouseCoords = new Vector2(0, 0);
     }
