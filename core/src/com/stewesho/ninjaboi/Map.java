@@ -27,11 +27,10 @@ enum Tile{
 }
 
 public class Map{
-    private TextureRegion region;
     private Tile[][] map;
 
-    private final int MAPWIDTH  = 523;
-    private final int MAPHEIGHT = 523;
+    public static final int MAPWIDTH  = 523;
+    public static final int MAPHEIGHT = 523;
 
     public Map(){
         map = new Tile[MAPWIDTH][MAPWIDTH];
