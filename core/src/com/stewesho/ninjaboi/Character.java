@@ -77,4 +77,5 @@ public abstract class Character{
     public int getY() { return (int) this.coords.y; }
     public Vector2 getPixelCoords() { return this.pixelCoords; }
     public float getSpeed() { return this.speed; }
+    public float getRot() { return this.rot; }
 }

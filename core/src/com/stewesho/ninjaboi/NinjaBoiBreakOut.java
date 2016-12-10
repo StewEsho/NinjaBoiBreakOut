@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
 public class NinjaBoiBreakOut extends ApplicationAdapter {
-	SpriteBatch batch;
+	public static SpriteBatch batch;
 	Texture img;
     Map map;
 	Player player;
@@ -33,7 +33,8 @@ public class NinjaBoiBreakOut extends ApplicationAdapter {
 
 		//render graphics
 		batch.setProjectionMatrix(cam.combined);
-		batch.begin();
+
+		batch.begin(); /////////////////////////////////
 
         for (int i = Math.max(0, player.getX() - 10 ); i < Math.min(player.getX() + 10, map.WIDTH); i++){
             for (int j = Math.max(0, player.getY() - 5 );j < Math.min(player.getY() + 5, map.HEIGHT); j++){
@@ -43,8 +44,13 @@ public class NinjaBoiBreakOut extends ApplicationAdapter {
 
 		//draws the player
 		player.getSprite().draw(batch);
+		//draw shurikens
+		for (Shuriken s : player.getShurikens()){
+			s.move();
+			s.draw(this.batch);
+		}
 
-		batch.end();
+		batch.end(); /////////////////////////////////
 	}
 
 	@Override
