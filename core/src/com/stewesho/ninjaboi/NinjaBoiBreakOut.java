@@ -10,17 +10,22 @@ public class NinjaBoiBreakOut extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
     Map map;
+	Player player;
 
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
         map = new Map(); //level (just the one room)
+		player = new Player(12, 12);
 	}
 
 	@Override
 	public void render () {
 		Gdx.gl.glClearColor((float)0.1, (float)0.1, (float)0.1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+		player.control();
+
 		batch.begin();
 
         for (int i = 0; i < 15; i++){
@@ -28,6 +33,8 @@ public class NinjaBoiBreakOut extends ApplicationAdapter {
                 batch.draw(map.getTexture(i, j), i*64, j*64);
             }
         }
+
+		batch.draw(player.getSprite(), player.getX(), player.getY());
 
 		batch.end();
 	}

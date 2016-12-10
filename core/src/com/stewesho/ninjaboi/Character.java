@@ -7,16 +7,20 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 public abstract class Character{
-    private Texture spritesheet; //all animations, etc
-    private TextureRegion sprite; //texture
-    private Vector2 coords; //stores x, y coordinates
-    private int state; //stores the state of the charcter
-    private int animationFrame; //stores which frame of animation the charactrer is on
+    protected Texture spritesheet; //all animations, etc
+    protected TextureRegion sprite; //texture
+    protected Vector2 coords; //stores x, y coordinates
+    protected float rot; //rotation in degrees (0/360 is north, clockwise)
+    protected float speed;
+    protected int state; //stores the state of the charcter
+    protected int animationFrame; //stores which frame of animation the charactrer is on
 
     public Character(float x, float y, String spritesheetPath){
         x = Math.max(0, Math.min(1, Map.MAPWIDTH));
         y = Math.max(0, Math.min(1, Map.MAPHEIGHT));
         this.coords = new Vector2(x, y);
+        this.rot = 0;
+        this.speed = 250;
         Gdx.app.log("Character", "New entity spawned in at (" + this.coords.x + ", " + this.coords.y + ")");
 
         this.state = 0; //inital/idle
@@ -40,12 +44,12 @@ public abstract class Character{
      * Adds/subtracts character coordinates
      */
 
-    public void addCoords(float deltaX, float deltaY){
+    protected void move(float deltaX, float deltaY){
         float x = this.coords.x + deltaX;
         float y = this.coords.y + deltaY;
         //clamp values
-        x = Math.max(0, Math.min(1, Map.MAPWIDTH));
-        y = Math.max(0, Math.min(1, Map.MAPHEIGHT));
+        // x = Math.max(0, Math.min(1, Map.MAPWIDTH));
+        // y = Math.max(0, Math.min(1, Map.MAPHEIGHT));
 
         this.coords.set(x, y);
     }
@@ -55,4 +59,8 @@ public abstract class Character{
      * @return [description]
      */
     public TextureRegion getSprite(){ return this.sprite; }
+
+    public float getX() { return this.coords.x; }
+    public float getY() { return this.coords.y; }
+    public Vector2 getCoords() { return this.coords; }
 }
