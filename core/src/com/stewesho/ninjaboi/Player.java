@@ -91,7 +91,6 @@ public class Player extends Character{
             move(0 , Gdx.graphics.getDeltaTime() * -getSpeed());
             state = state.WALKING;
         }
-        getSprite().setPosition(getPixelX(), getPixelY());
     }
 
     public void aim(){

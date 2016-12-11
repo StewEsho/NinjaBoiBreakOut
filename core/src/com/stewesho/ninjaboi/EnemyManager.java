@@ -13,20 +13,26 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
  */
 
  enum EnemyType{
-     FLAMEO(1, "Flameo"),
-     PARKA(2, "Parka Boi");
+     FLAMEO(1, "Flameo", 48, 48),
+     PARKA(2, "Parka Boi", 64, 64);
 
      //fields
      private final int id;
      private final String name;
+     private final float width;
+     private final float length;
 
-     EnemyType (int id, String name){
+     EnemyType (int id, String name, float width, float length){
          this.id = id;
          this.name = name;
+         this.width = width;
+         this.length = length;
      }
 
      public int getId(){ return this.id; }
      public String getName(){ return this.name; }
+     public float getWidth(){ return this.width; }
+     public float getLength(){ return this.length; }
  }
 
 ////////////////////////////////////////////////////////////////////////////////

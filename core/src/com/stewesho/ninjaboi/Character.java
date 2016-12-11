@@ -12,8 +12,10 @@ public abstract class Character{
     protected Sprite sprite; //texture
     protected Vector2 coords; //stores x, y coordinates based on map grid
     protected Vector2 pixelCoords; //stores coords used for rendering on screen
-    private float rot; //rotation in degrees (0/360 is north, clockwise)
+    protected float rot; //rotation in degrees (0/360 is north, clockwise)
     private float speed;
+
+    protected float delta; //delta time
 
     public Character(int x, int y, String spritesheetPath){
         //clamp values based on map grid size
@@ -29,8 +31,13 @@ public abstract class Character{
         this.speed = 500;
         Gdx.app.log("Character", "New entity spawned in at (" + this.coords.x + ", " + this.coords.y + ")");
 
+        this.delta = 0;
+
         this.spritesheet = new Texture(spritesheetPath);
         this.sprite = new Sprite(this.spritesheet, 64, 0, 64, 64);
+        this.sprite.setOrigin(32, 32);
+        this.sprite.setOriginCenter();
+        this.sprite.setPosition(x*64, y*64);
     }
 
     /**
@@ -56,6 +63,7 @@ public abstract class Character{
 
         this.pixelCoords.set(x, y);
         this.coords.set(Math.round(x/64 - -0.5), Math.round(y/64 - -0.5));
+        this.sprite.setPosition(x, y);
     }
 
     protected void setRot(float angle){

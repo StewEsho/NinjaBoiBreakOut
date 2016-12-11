@@ -65,7 +65,7 @@ public class NinjaBoiBreakOut extends ApplicationAdapter {
 		//draw enemies
 		index = 0;
 		for (Enemy e : eMan.getEnemyList()){
-			//e.move();
+			e.runAI();
 			e.draw(this.batch);
 			if (e.isDead()){
 				//e.killBody();

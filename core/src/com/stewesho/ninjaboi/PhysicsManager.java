@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector2;
 
 
 public class PhysicsManager{
@@ -32,16 +33,35 @@ public class PhysicsManager{
 
         Body shurikenBody = world.createBody(bd);
 
-        CircleShape circularBody = new CircleShape();
-        circularBody.setRadius(8f);
+        CircleShape shape = new CircleShape();
+        shape.setRadius(8f);
 
         FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = circularBody;
+        fixtureDef.shape = shape;
         Fixture fixture = shurikenBody.createFixture(fixtureDef);
 
-        circularBody.dispose();
+        shape.dispose();
 
         return shurikenBody;
+    }
+
+    public Body createEnemyBody(float x, float y, float width, float length){
+        BodyDef bd = new BodyDef();
+        bd.type = BodyType.KinematicBody;
+        bd.position.set(x, y);
+
+        Body enemyBody = world.createBody(bd);
+
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(width/2, length/2, new Vector2(width/2, length), 0);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        Fixture fixture = enemyBody.createFixture(fixtureDef);
+
+        shape.dispose();
+
+        return enemyBody;
     }
 
     public World getWorld(){ return world; }
