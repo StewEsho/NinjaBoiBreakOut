@@ -87,18 +87,18 @@ public class Enemy extends Character{
         if (this.rotVel > this.maxRotVel || this.rotVel < -this.maxRotVel)
             this.rotAcc = -this.rotAcc;
         this.vel += this.acc * this.delta;
-        float deltaY = vel * MathUtils.sinDeg(this.rot) * this.delta;
-        float deltaX = vel * MathUtils.cosDeg(this.rot) * this.delta;
+        float deltaY = vel * MathUtils.sinDeg(this.rot);
+        float deltaX = vel * MathUtils.cosDeg(this.rot);
         this.rotVel += this.rotAcc*this.delta;
         this.rot += this.rotVel*this.delta;
 
         //based on kinematics, move the enemy and its physics bodies
-        this.body.setTransform(pixelCoords.x+32+deltaX, pixelCoords.y+32+deltaY, 0);
-        this.move(this.body.getPosition().x - pixelCoords.x-32, this.body.getPosition().y - pixelCoords.y-32);
+        this.body.setLinearVelocity(new Vector2(deltaX, deltaY));
+        this.setPixelCoords(this.body.getPosition().x-32, this.body.getPosition().y-32);
         this.sprite.setRotation(this.rot - 90);
         this.sprite.setOrigin(this.sprite.getWidth()/2,this.sprite.getHeight()/2);
 
-        this.sprite.setPosition(pixelCoords.x, pixelCoords.y);
+        this.sprite.setPosition(this.body.getPosition().x - 32, this.body.getPosition().y - 32);
 
     }
 

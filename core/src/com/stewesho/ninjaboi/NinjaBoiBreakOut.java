@@ -23,7 +23,7 @@ public class NinjaBoiBreakOut extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		physicsManager = new PhysicsManager();
         map = new Map(); //level (just the one room)
-		player = new Player(2, 3);
+		player = new Player(1, 1);
 		cam = new OrthographicCamera(800, 450);
 
 		audio.playSong();

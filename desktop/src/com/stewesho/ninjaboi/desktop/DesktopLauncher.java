@@ -7,6 +7,6 @@ import com.stewesho.ninjaboi.NinjaBoiBreakOut;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		new LwjglApplication(new NinjaBoiBreakOut(), "Ninja Boi: Break Out", 800, 450);
+		new LwjglApplication(new NinjaBoiBreakOut(), "Ninja Boi: Break Out", 1024, 576);
 	}
 }

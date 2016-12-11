@@ -21,10 +21,14 @@ enum Tile{
         this.id = id;
         this.spritesheet = new Texture("art/tiles.png");
         this.texture = new TextureRegion(this.spritesheet, this.id*64, 0, 64, 64);
+
+
     }
 
     public int getId(){ return this.id; }
     public TextureRegion getTexture(){ return this.texture; }
+    public Body getBody() { return this.body; }
+    public void setBody(Body b) {this.body = b;}
 }
 
 public class Map{
@@ -46,8 +50,14 @@ public class Map{
                     try{
                         if ((i == WIDTH-1 || i == 0) || (j == HEIGHT-1 || j == 0) )
                             map[i][j] = Tile.WALL;
-                        else
+                        else{
                             map[i][j] = Tile.FLOOR;
+                        }
+
+                        if (map[i][j].getId() != 1)
+                            map[i][j].setBody(NinjaBoiBreakOut.physicsManager.createWallBody(i , j));
+                        else
+                            map[i][j].setBody(null);
                     } catch (NullPointerException e){
                         Gdx.app.log("ERROR", "Map not initialized");
                     }
@@ -55,7 +65,7 @@ public class Map{
             }
 
             map[3][8] = Tile.ICE;
-            NinjaBoiBreakOut.physicsManager.createIceWallBody(3, 8);
+            map[3][8].setBody(NinjaBoiBreakOut.physicsManager.createWallBody(3, 8));
         }
 
     public TextureRegion getTexture(int x, int y) {

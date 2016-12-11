@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 
 
-public class PhysicsManager{
+public class PhysicsManager {
     public World world;
     public Box2DDebugRenderer debugRenderer;
 
@@ -19,16 +19,22 @@ public class PhysicsManager{
         Box2D.init();
         this.world = new World(new Vector2(0, -10), true);
         debugRenderer = new Box2DDebugRenderer();
+        createCollisionListener();
     }
 
     public void run(OrthographicCamera cam){
         this.world.step(1/45f, 6, 2);
         this.debugRenderer.render(world, cam.combined);
+
+        for (Contact contact : world.getContactList()) {
+            Fixture fixtureA = contact.getFixtureA();
+            Fixture fixtureB = contact.getFixtureB();
+        }
     }
 
     public Body createShurikenBody(float x, float y){
         BodyDef bd = new BodyDef();
-        bd.type = BodyType.KinematicBody;
+        bd.type = BodyType.DynamicBody;
         bd.position.set(x, y);
 
         Body shurikenBody = world.createBody(bd);
@@ -36,9 +42,10 @@ public class PhysicsManager{
         CircleShape shape = new CircleShape();
         shape.setRadius(8f);
 
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        Fixture fixture = shurikenBody.createFixture(fixtureDef);
+        FixtureDef shuriken = new FixtureDef();
+        shuriken.shape = shape;
+        shuriken.isSensor = true;
+        Fixture fixture = shurikenBody.createFixture(shuriken);
 
         shape.dispose();
 
@@ -47,7 +54,7 @@ public class PhysicsManager{
 
     public Body createEnemyBody(float x, float y, float width, float length){
         BodyDef bd = new BodyDef();
-        bd.type = BodyType.KinematicBody;
+        bd.type = BodyType.DynamicBody;
         bd.position.set(x, y);
 
         Body enemyBody = world.createBody(bd);
@@ -55,16 +62,16 @@ public class PhysicsManager{
         CircleShape shape = new CircleShape();
         shape.setRadius(width/2);
 
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        Fixture fixture = enemyBody.createFixture(fixtureDef);
+        FixtureDef enemy = new FixtureDef();
+        enemy.shape = shape;
+        Fixture fixture = enemyBody.createFixture(enemy);
 
         shape.dispose();
 
         return enemyBody;
     }
 
-    public Body createIceWallBody(int x, int y){
+    public Body createWallBody(int x, int y){
         BodyDef bd = new BodyDef();
         bd.type = BodyType.StaticBody;
         bd.position.set(((float) x * 64) + 32, ((float) y * 64) + 32);
@@ -74,13 +81,31 @@ public class PhysicsManager{
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(32f, 32f);
 
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        Fixture fixture = wallBody.createFixture(fixtureDef);
+        FixtureDef wall = new FixtureDef();
+        wall.shape = shape;
+        Fixture fixture = wallBody.createFixture(wall);
 
         shape.dispose();
 
         return wallBody;
+    }
+
+    private void createCollisionListener() {
+        this.world.setContactListener(new ContactListener() {
+
+            @Override
+            public void beginContact(Contact contact) {}
+
+            @Override
+            public void endContact(Contact contact) {}
+
+            @Override
+            public void preSolve(Contact contact, Manifold oldManifold) {}
+
+            @Override
+            public void postSolve(Contact contact, ContactImpulse impulse) {}
+
+        });
     }
 
     public World getWorld(){ return world; }
