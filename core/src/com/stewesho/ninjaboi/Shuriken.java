@@ -47,7 +47,7 @@ public class Shuriken{
         this.body.setTransform(this.sprite.getX()+8, this.sprite.getY()+8, 0);
 
         this.elapsedLifetime = (System.currentTimeMillis() - this.startTime)/1000; //get time lasted
-        if (this.elapsedLifetime > this.lifespan)
+        if (this.elapsedLifetime > this.lifespan || this.body.getUserData() == "dead")
             this.isDead = true;
     }
 

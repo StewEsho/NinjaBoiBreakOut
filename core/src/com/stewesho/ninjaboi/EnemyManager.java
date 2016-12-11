@@ -52,6 +52,10 @@ public class EnemyManager{
         this.enemyList.add(new Enemy(type, x, y));
     }
 
+    public void spawnCycle(){
+        
+    }
+
     public Array<Enemy> getEnemyList() { return enemyList; }
     public Enemy getEnemyList(int index) { return enemyList.get(index); }
 

@@ -71,7 +71,7 @@ public class NinjaBoiBreakOut extends ApplicationAdapter {
 			e.runAI();
 			e.draw(this.batch);
 			if (e.isDead()){
-				//e.killBody();
+				e.killBody();
 				eMan.getEnemyList().removeIndex(index);
 			}
 			index++;

@@ -25,7 +25,7 @@ public class PhysicsManager {
 
     public void run(OrthographicCamera cam, Array<Shuriken> shurikenList, Array<Enemy> enemyList){
         this.world.step(1/45f, 6, 2);
-        this.debugRenderer.render(world, cam.combined);
+        // this.debugRenderer.render(world, cam.combined);
 
     }
 
@@ -119,6 +119,8 @@ public class PhysicsManager {
                 if((contact.getFixtureA().getBody().getUserData()=="shuriken" && contact.getFixtureB().getBody().getUserData()=="enemy")
                 || (contact.getFixtureA().getBody().getUserData()=="enemy" && contact.getFixtureB().getBody().getUserData()=="shuriken")){
                     Player.addPoints();
+                    contact.getFixtureA().getBody().setUserData("dead");
+                    contact.getFixtureB().getBody().setUserData("dead");
                 }
 
             }

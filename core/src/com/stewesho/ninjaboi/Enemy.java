@@ -100,10 +100,16 @@ public class Enemy extends Character{
 
         this.sprite.setPosition(this.body.getPosition().x - 32, this.body.getPosition().y - 32);
 
+        if (this.body.getUserData() == "dead")
+            this.isDead = true;
     }
 
     public boolean isDead(){ return this.isDead; }
     public Body getBody(){ return this.body; }
-    public void kill(){ this.isDead = true; }
+    public void killBody(){
+        NinjaBoiBreakOut.physicsManager.world.destroyBody(body);
+        body.setUserData(null);
+        body = null;
+    }
 
 }
