@@ -49,6 +49,7 @@ public class Player extends Character{
         if (System.currentTimeMillis() - this.lastFireTime > 250){
             state = state.SHOOTING;
             this.shuriken.add(new Shuriken(getPixelX() + 32, getPixelY() + 32, getRot() + 90));
+            NinjaBoiBreakOut.audio.playSFX(1, 0.25f); //plays shooting sfx
             this.lastFireTime = System.currentTimeMillis();
         }
     }
