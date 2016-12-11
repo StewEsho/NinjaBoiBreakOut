@@ -52,6 +52,9 @@ public class NinjaBoiBreakOut extends ApplicationAdapter {
             }
         }
 
+		//spawns enemies
+		eMan.spawnCycle();
+
 		//draws the player
 		player.getSprite().draw(batch);
 		//draw shurikens

@@ -43,9 +43,18 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 public class EnemyManager{
 
     protected Array<Enemy> enemyList;
+    private long spawnTimer; //in ms
+    private long spawnRate; //in ms
+    private long timeSinceSpawn; //in ms
+    private final int maxEntities;
 
     public EnemyManager(){
         this.enemyList = new Array(true, 16);
+        this.spawnTimer = 0;
+        this.spawnRate = 2000;
+        this.timeSinceSpawn = this.spawnTimer + this.spawnRate + 5;
+
+        this.maxEntities = 50;
     }
 
     public void spawn(EnemyType type, int x, int y){
@@ -53,7 +62,11 @@ public class EnemyManager{
     }
 
     public void spawnCycle(){
-        
+        if (this.spawnTimer - this.timeSinceSpawn > this.spawnRate && this.enemyList.size < this.maxEntities){
+            spawn(EnemyType.FLAMEO, MathUtils.random(1, Map.WIDTH), MathUtils.random(1, Map.HEIGHT));
+            this.timeSinceSpawn = System.currentTimeMillis();
+        }
+        this.spawnTimer = System.currentTimeMillis();
     }
 
     public Array<Enemy> getEnemyList() { return enemyList; }
