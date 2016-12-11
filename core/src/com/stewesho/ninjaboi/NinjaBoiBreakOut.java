@@ -20,6 +20,7 @@ public class NinjaBoiBreakOut extends ApplicationAdapter {
         map = new Map(); //level (just the one room)
 		player = new Player(2, 3);
 		cam = new OrthographicCamera(800, 450);
+
 	}
 
 	@Override
@@ -45,9 +46,13 @@ public class NinjaBoiBreakOut extends ApplicationAdapter {
 		//draws the player
 		player.getSprite().draw(batch);
 		//draw shurikens
+		int index = 0;
 		for (Shuriken s : player.getShurikens()){
 			s.move();
 			s.draw(this.batch);
+			if (s.isDead())
+				player.getShurikens().removeIndex(index);
+			index++;
 		}
 
 		batch.end(); /////////////////////////////////

@@ -42,8 +42,8 @@ public abstract class Character{
      */
 
     public void setPixelCoords(float x, float y){
-        x = Math.max(64, Math.min(Map.PIXELWIDTH-128, x));
-        y = Math.max(64, Math.min(Map.PIXELHEIGHT-128, y));
+        x = Math.max(32, Math.min(Map.PIXELWIDTH-96, x));
+        y = Math.max(32, Math.min(Map.PIXELHEIGHT-96, y));
         this.pixelCoords.set(x, y);
     }
 
@@ -55,8 +55,8 @@ public abstract class Character{
         float x = this.pixelCoords.x + deltaX;
         float y = this.pixelCoords.y + deltaY;
         //clamp values
-        x = Math.max(64, Math.min(Map.PIXELWIDTH-128, x));
-        y = Math.max(64, Math.min(Map.PIXELHEIGHT-128, y));
+        x = Math.max(32, Math.min(Map.PIXELWIDTH-96, x));
+        y = Math.max(32, Math.min(Map.PIXELHEIGHT-96, y));
 
         this.pixelCoords.set(x, y);
         this.coords.set(Math.round(x/64 - -0.5), Math.round(y/64 - -0.5));

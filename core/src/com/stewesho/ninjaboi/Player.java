@@ -19,6 +19,7 @@ public class Player extends Character{
     private float mouseRot;
     private Array<Shuriken> shuriken;
     private State state;
+    private long lastFireTime;
 
     public Player(int x, int y){
         super(x, y, "art/boi.png");
@@ -26,6 +27,8 @@ public class Player extends Character{
         this.mouseCoords = new Vector2(0, 0);
         this.mouseRot = 0.0f;
         this.shuriken = new Array(true, 10);
+
+        this.lastFireTime = 0;
     }
 
     /**
@@ -43,8 +46,11 @@ public class Player extends Character{
     }
 
     public void shoot(){ //shoots out a shuriken
-        state = state.SHOOTING;
-        this.shuriken.add(new Shuriken(getPixelX(), getPixelY(), getRot() + 90));
+        if (System.currentTimeMillis() - this.lastFireTime > 250){
+            state = state.SHOOTING;
+            this.shuriken.add(new Shuriken(getPixelX() + 32, getPixelY() + 32, getRot() + 90));
+            this.lastFireTime = System.currentTimeMillis();
+        }
     }
 
     public void move(){
