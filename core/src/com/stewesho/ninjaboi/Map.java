@@ -21,8 +21,6 @@ enum Tile{
         this.id = id;
         this.spritesheet = new Texture("art/tiles.png");
         this.texture = new TextureRegion(this.spritesheet, this.id*64, 0, 64, 64);
-
-
     }
 
     public int getId(){ return this.id; }
@@ -34,8 +32,8 @@ enum Tile{
 public class Map{
     private Tile[][] map;
 
-    public static final int WIDTH  = 10;
-    public static final int HEIGHT = 20;
+    public static final int WIDTH  = 25;
+    public static final int HEIGHT = 25;
     public static final int PIXELWIDTH  = WIDTH * 64;
     public static final int PIXELHEIGHT = HEIGHT * 64;
 

@@ -36,7 +36,7 @@ public class Player extends Character{
     private Array<Shuriken> shuriken;
     private PlayerState state;
     private long lastFireTime;
-    private Body body;
+    private int points;
 
     public Player(int x, int y){
         super(x, y, "art/boi.png");
@@ -44,9 +44,8 @@ public class Player extends Character{
         this.mouseCoords = new Vector2(0, 0);
         this.mouseRot = 0.0f;
         this.shuriken = new Array(true, 10);
-        this.body = NinjaBoiBreakOut.physicsManager.createPlayerBody(x, y);
-
         this.lastFireTime = 0;
+        this.points = 0;
     }
 
     /**
@@ -106,9 +105,17 @@ public class Player extends Character{
         this.setRot(this.mouseRot);
     }
 
+    public void addPoints(int points){
+        this.points = points;
+    }
+    public void addPoints(){
+        this.points += 1;
+    }
+
     /**
      * GETTERS
      */
     public PlayerState getState() { return this.state; }
     public Array<Shuriken> getShurikens(){ return this.shuriken; }
+    public int getPoints(){ return this.points; }
 }

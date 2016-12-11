@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 public class NinjaBoiBreakOut extends ApplicationAdapter {
 	public static SpriteBatch batch;
@@ -15,16 +16,18 @@ public class NinjaBoiBreakOut extends ApplicationAdapter {
     Map map;
 	Player player;
 	OrthographicCamera cam;
+	BitmapFont font;
 
 	@Override
 	public void create () {
-		audio = new AudioManager("music/maintheme.wav");
-		eMan = new EnemyManager();
-		batch = new SpriteBatch();
-		physicsManager = new PhysicsManager();
-        map = new Map(); //level (just the one room)
-		player = new Player(1, 1);
-		cam = new OrthographicCamera(800, 450);
+		this.audio = new AudioManager("music/maintheme.wav");
+		this.eMan = new EnemyManager();
+		this.batch = new SpriteBatch();
+		this.physicsManager = new PhysicsManager();
+  		this.map = new Map(); //level (just the one room)
+		this.player = new Player(3, 3);
+		this.cam = new OrthographicCamera(800, 450);
+		this.font = new BitmapFont(Gdx.files.internal("font/KomikaAxis.fnt"), Gdx.files.internal("font/KomikaAxis.png"), false);
 
 		audio.playSong();
 	}
@@ -73,6 +76,9 @@ public class NinjaBoiBreakOut extends ApplicationAdapter {
 			}
 			index++;
 		}
+
+		font.setColor(0.631f, 0.780f, 0.807f, 1.0f);
+		font.draw(batch, "Targets Terminated: " + player.getPoints(), player.getPixelX() - 350, player.getPixelY() - 150);
 
 		batch.end(); /////////////////////////////////
 
