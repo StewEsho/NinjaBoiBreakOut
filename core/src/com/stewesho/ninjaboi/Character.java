@@ -13,7 +13,7 @@ public abstract class Character{
     protected Vector2 coords; //stores x, y coordinates based on map grid
     protected Vector2 pixelCoords; //stores coords used for rendering on screen
     protected float rot; //rotation in degrees (0/360 is north, clockwise)
-    private float speed;
+    protected float speed;
 
     protected float delta; //delta time
 

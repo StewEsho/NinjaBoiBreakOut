@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.physics.box2d.Body;
 
 enum Tile{
     ICE(0),
@@ -14,6 +15,7 @@ enum Tile{
     private final int id;
     private final Texture spritesheet;
     private final TextureRegion texture;
+    private Body body;
 
     Tile (int id){
         this.id = id;
@@ -51,6 +53,9 @@ public class Map{
                     }
                 }
             }
+
+            map[3][8] = Tile.ICE;
+            NinjaBoiBreakOut.physicsManager.createIceWallBody(3, 8);
         }
 
     public TextureRegion getTexture(int x, int y) {

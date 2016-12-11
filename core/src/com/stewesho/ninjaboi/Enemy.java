@@ -42,6 +42,11 @@ public class Enemy extends Character{
     private float rotVel;
     private float rotAcc;
 
+    //this.speed is the max speed; //abs value
+    private float maxAcc; //abs value
+    private float maxRotVel; //abs value
+    private float maxRotAcc; //abs value
+
 
     public Enemy(EnemyType id, int x, int y){
         super(x, y, "art/boi.png");
@@ -58,6 +63,9 @@ public class Enemy extends Character{
         this.rot = MathUtils.random(0, 360);
         this.rotVel = 2;
         this.rotAcc = 5;
+        this.maxAcc = 30;
+        this.maxRotVel = 180;
+        this.maxRotAcc = 10;
 
         //inits body
         this.body = NinjaBoiBreakOut.physicsManager.createEnemyBody(pixelCoords.x+32, pixelCoords.y+32, this.type.getWidth(), this.type.getLength());
@@ -73,19 +81,25 @@ public class Enemy extends Character{
         //run kinematics
         this.delta = Gdx.graphics.getDeltaTime(); //set delta time
 
+        //kinematics calculations (pos, vel, acc, rot, etc.)
+        if (this.vel > this.speed || this.vel < -this.speed)
+            this.acc = -this.acc;
+        if (this.rotVel > this.maxRotVel || this.rotVel < -this.maxRotVel)
+            this.rotAcc = -this.rotAcc;
         this.vel += this.acc * this.delta;
         float deltaY = vel * MathUtils.sinDeg(this.rot) * this.delta;
         float deltaX = vel * MathUtils.cosDeg(this.rot) * this.delta;
-        this.move(deltaX, deltaY);
-
         this.rotVel += this.rotAcc*this.delta;
         this.rot += this.rotVel*this.delta;
 
+        //based on kinematics, move the enemy and its physics bodies
+        this.body.setTransform(pixelCoords.x+32+deltaX, pixelCoords.y+32+deltaY, 0);
+        this.move(this.body.getPosition().x - pixelCoords.x-32, this.body.getPosition().y - pixelCoords.y-32);
         this.sprite.setRotation(this.rot - 90);
         this.sprite.setOrigin(this.sprite.getWidth()/2,this.sprite.getHeight()/2);
+
         this.sprite.setPosition(pixelCoords.x, pixelCoords.y);
 
-        this.body.setTransform(pixelCoords.x+32, pixelCoords.y+32, 0);
     }
 
     public boolean isDead(){ return this.isDead; }

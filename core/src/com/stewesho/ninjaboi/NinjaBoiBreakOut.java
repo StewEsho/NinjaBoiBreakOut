@@ -21,11 +21,11 @@ public class NinjaBoiBreakOut extends ApplicationAdapter {
 		audio = new AudioManager("music/maintheme.wav");
 		eMan = new EnemyManager();
 		batch = new SpriteBatch();
+		physicsManager = new PhysicsManager();
         map = new Map(); //level (just the one room)
 		player = new Player(2, 3);
 		cam = new OrthographicCamera(800, 450);
 
-		physicsManager = new PhysicsManager();
 		audio.playSong();
 	}
 

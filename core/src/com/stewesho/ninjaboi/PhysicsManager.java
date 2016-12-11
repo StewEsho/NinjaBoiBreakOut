@@ -64,6 +64,25 @@ public class PhysicsManager{
         return enemyBody;
     }
 
+    public Body createIceWallBody(int x, int y){
+        BodyDef bd = new BodyDef();
+        bd.type = BodyType.StaticBody;
+        bd.position.set(((float) x * 64) + 32, ((float) y * 64) + 32);
+
+        Body wallBody = world.createBody(bd);
+
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(32f, 32f);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        Fixture fixture = wallBody.createFixture(fixtureDef);
+
+        shape.dispose();
+
+        return wallBody;
+    }
+
     public World getWorld(){ return world; }
 
 }
