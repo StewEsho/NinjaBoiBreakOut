@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 
 
 public class PhysicsManager {
@@ -22,14 +23,10 @@ public class PhysicsManager {
         createCollisionListener();
     }
 
-    public void run(OrthographicCamera cam){
+    public void run(OrthographicCamera cam, Array<Shuriken> shurikenList, Array<Enemy> enemyList){
         this.world.step(1/45f, 6, 2);
         this.debugRenderer.render(world, cam.combined);
 
-        for (Contact contact : world.getContactList()) {
-            Fixture fixtureA = contact.getFixtureA();
-            Fixture fixtureB = contact.getFixtureB();
-        }
     }
 
     public Body createShurikenBody(float x, float y){
@@ -38,6 +35,7 @@ public class PhysicsManager {
         bd.position.set(x, y);
 
         Body shurikenBody = world.createBody(bd);
+        shurikenBody.setUserData("shuriken");
 
         CircleShape shape = new CircleShape();
         shape.setRadius(8f);
@@ -58,6 +56,7 @@ public class PhysicsManager {
         bd.position.set(((float) x * 64) + 32, ((float) y * 64) + 32);
 
         Body playerBody = world.createBody(bd);
+        playerBody.setUserData("player");
 
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(32, 8);
@@ -77,6 +76,8 @@ public class PhysicsManager {
         bd.position.set(x, y);
 
         Body enemyBody = world.createBody(bd);
+        enemyBody.setUserData("enemy");
+
 
         CircleShape shape = new CircleShape();
         shape.setRadius(width/2);
@@ -96,6 +97,7 @@ public class PhysicsManager {
         bd.position.set(((float) x * 64) + 32, ((float) y * 64) + 32);
 
         Body wallBody = world.createBody(bd);
+        wallBody.setUserData("wall");
 
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(32f, 32f);
@@ -113,7 +115,13 @@ public class PhysicsManager {
         this.world.setContactListener(new ContactListener() {
 
             @Override
-            public void beginContact(Contact contact) {}
+            public void beginContact(Contact contact) {
+                if((contact.getFixtureA().getBody().getUserData()=="shuriken" && contact.getFixtureB().getBody().getUserData()=="enemy")
+                || (contact.getFixtureA().getBody().getUserData()=="enemy" && contact.getFixtureB().getBody().getUserData()=="shuriken")){
+                    Player.addPoints();
+                }
+
+            }
 
             @Override
             public void endContact(Contact contact) {}

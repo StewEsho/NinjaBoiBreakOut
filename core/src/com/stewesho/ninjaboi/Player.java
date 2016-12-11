@@ -36,7 +36,7 @@ public class Player extends Character{
     private Array<Shuriken> shuriken;
     private PlayerState state;
     private long lastFireTime;
-    private int points;
+    public static int points;
 
     public Player(int x, int y){
         super(x, y, "art/boi.png");
@@ -105,11 +105,11 @@ public class Player extends Character{
         this.setRot(this.mouseRot);
     }
 
-    public void addPoints(int points){
-        this.points = points;
+    public static void addPoints(int _points){
+        points = _points;
     }
-    public void addPoints(){
-        this.points += 1;
+    public static void addPoints(){
+        points += 1;
     }
 
     /**

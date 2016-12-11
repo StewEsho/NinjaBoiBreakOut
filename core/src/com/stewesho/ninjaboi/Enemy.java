@@ -103,6 +103,7 @@ public class Enemy extends Character{
     }
 
     public boolean isDead(){ return this.isDead; }
-
+    public Body getBody(){ return this.body; }
+    public void kill(){ this.isDead = true; }
 
 }

@@ -25,7 +25,7 @@ public class NinjaBoiBreakOut extends ApplicationAdapter {
 		this.batch = new SpriteBatch();
 		this.physicsManager = new PhysicsManager();
   		this.map = new Map(); //level (just the one room)
-		this.player = new Player(3, 3);
+		this.player = new Player(5, 5);
 		this.cam = new OrthographicCamera(800, 450);
 		this.font = new BitmapFont(Gdx.files.internal("font/KomikaAxis.fnt"), Gdx.files.internal("font/KomikaAxis.png"), false);
 
@@ -83,7 +83,7 @@ public class NinjaBoiBreakOut extends ApplicationAdapter {
 		batch.end(); /////////////////////////////////
 
 		//run physics world step
-		physicsManager.run(cam);
+		physicsManager.run(cam, player.getShurikens(), eMan.getEnemyList());
 
 	}
 
