@@ -63,9 +63,6 @@ public class Map{
                     }
                 }
             }
-
-            map[3][8] = Tile.ICE;
-            map[3][8].setBody(NinjaBoiBreakOut.physicsManager.createWallBody(3, 8));
         }
 
     public TextureRegion getTexture(int x, int y) {

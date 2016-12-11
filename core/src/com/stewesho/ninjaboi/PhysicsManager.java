@@ -17,7 +17,7 @@ public class PhysicsManager {
 
     public PhysicsManager(){
         Box2D.init();
-        this.world = new World(new Vector2(0, -10), true);
+        this.world = new World(new Vector2(0, 0), true);
         debugRenderer = new Box2DDebugRenderer();
         createCollisionListener();
     }
@@ -50,6 +50,25 @@ public class PhysicsManager {
         shape.dispose();
 
         return shurikenBody;
+    }
+
+    public Body createPlayerBody(int x, int y){
+        BodyDef bd = new BodyDef();
+        bd.type = BodyType.DynamicBody;
+        bd.position.set(((float) x * 64) + 32, ((float) y * 64) + 32);
+
+        Body playerBody = world.createBody(bd);
+
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(32, 8);
+
+        FixtureDef player = new FixtureDef();
+        player.shape = shape;
+        Fixture fixture = playerBody.createFixture(player);
+
+        shape.dispose();
+
+        return playerBody;
     }
 
     public Body createEnemyBody(float x, float y, float width, float length){

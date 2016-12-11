@@ -7,6 +7,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.physics.box2d.Body;
 
 enum PlayerState{
     IDLE(0),
@@ -35,6 +36,7 @@ public class Player extends Character{
     private Array<Shuriken> shuriken;
     private PlayerState state;
     private long lastFireTime;
+    private Body body;
 
     public Player(int x, int y){
         super(x, y, "art/boi.png");
@@ -42,6 +44,7 @@ public class Player extends Character{
         this.mouseCoords = new Vector2(0, 0);
         this.mouseRot = 0.0f;
         this.shuriken = new Array(true, 10);
+        this.body = NinjaBoiBreakOut.physicsManager.createPlayerBody(x, y);
 
         this.lastFireTime = 0;
     }
