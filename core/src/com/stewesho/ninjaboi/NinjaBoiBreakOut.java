@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 
 public class NinjaBoiBreakOut extends ApplicationAdapter {
 	public static SpriteBatch batch;
+	public static PhysicsManager physicsManager;
 	Texture img;
     Map map;
 	Player player;
@@ -21,6 +22,7 @@ public class NinjaBoiBreakOut extends ApplicationAdapter {
 		player = new Player(2, 3);
 		cam = new OrthographicCamera(800, 450);
 
+		physicsManager = new PhysicsManager();
 	}
 
 	@Override
@@ -50,12 +52,16 @@ public class NinjaBoiBreakOut extends ApplicationAdapter {
 		for (Shuriken s : player.getShurikens()){
 			s.move();
 			s.draw(this.batch);
-			if (s.isDead())
+			if (s.isDead()){
+				s.killBody();
 				player.getShurikens().removeIndex(index);
+			}
 			index++;
 		}
 
 		batch.end(); /////////////////////////////////
+		physicsManager.run(cam);
+
 	}
 
 	@Override
