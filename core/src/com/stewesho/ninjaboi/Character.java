@@ -27,7 +27,7 @@ public abstract class Character{
 
         //set defaults
         this.rot = 0;
-        this.speed = 250;
+        this.speed = 500;
         Gdx.app.log("Character", "New entity spawned in at (" + this.coords.x + ", " + this.coords.y + ")");
 
         this.state = 0; //inital/idle

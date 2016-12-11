@@ -10,19 +10,21 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 public class NinjaBoiBreakOut extends ApplicationAdapter {
 	public static SpriteBatch batch;
 	public static PhysicsManager physicsManager;
-	Texture img;
     Map map;
 	Player player;
 	OrthographicCamera cam;
+	AudioManager audio;
 
 	@Override
 	public void create () {
+		audio = new AudioManager("music/maintheme.wav");
 		batch = new SpriteBatch();
         map = new Map(); //level (just the one room)
 		player = new Player(2, 3);
 		cam = new OrthographicCamera(800, 450);
 
 		physicsManager = new PhysicsManager();
+		audio.playSong();
 	}
 
 	@Override
@@ -67,6 +69,6 @@ public class NinjaBoiBreakOut extends ApplicationAdapter {
 	@Override
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
+		audio.dispose();
 	}
 }
