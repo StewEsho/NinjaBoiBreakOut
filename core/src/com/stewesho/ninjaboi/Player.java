@@ -61,6 +61,9 @@ public class Player extends Character{
         if(System.currentTimeMillis() - this.lastFireTime < 50)
             this.state = PlayerState.SHOOTING;
 
+        if(Gdx.input.isKeyJustPressed(Keys.Q))
+            NinjaBoiBreakOut.eMan.spawn(EnemyType.FLAMEO, (int) coords.x, (int) coords.y);
+
         //updates animation frame
         getSprite().setRegion(64 * this.state.getId(), 0, 64, 64);
     }

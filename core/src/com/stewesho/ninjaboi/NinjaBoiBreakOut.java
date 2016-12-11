@@ -11,6 +11,7 @@ public class NinjaBoiBreakOut extends ApplicationAdapter {
 	public static SpriteBatch batch;
 	public static PhysicsManager physicsManager;
 	public static AudioManager audio;
+	public static EnemyManager eMan;
     Map map;
 	Player player;
 	OrthographicCamera cam;
@@ -18,6 +19,7 @@ public class NinjaBoiBreakOut extends ApplicationAdapter {
 	@Override
 	public void create () {
 		audio = new AudioManager("music/maintheme.wav");
+		eMan = new EnemyManager();
 		batch = new SpriteBatch();
         map = new Map(); //level (just the one room)
 		player = new Player(2, 3);
@@ -60,8 +62,21 @@ public class NinjaBoiBreakOut extends ApplicationAdapter {
 			}
 			index++;
 		}
+		//draw enemies
+		index = 0;
+		for (Enemy e : eMan.getEnemyList()){
+			//e.move();
+			e.draw(this.batch);
+			if (e.isDead()){
+				//e.killBody();
+				eMan.getEnemyList().removeIndex(index);
+			}
+			index++;
+		}
 
 		batch.end(); /////////////////////////////////
+
+		//run physics world step
 		physicsManager.run(cam);
 
 	}

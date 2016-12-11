@@ -29,7 +29,7 @@ public class Map{
     private Tile[][] map;
 
     public static final int WIDTH  = 10;
-    public static final int HEIGHT = 10;
+    public static final int HEIGHT = 20;
     public static final int PIXELWIDTH  = WIDTH * 64;
     public static final int PIXELHEIGHT = HEIGHT * 64;
 
