@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 public abstract class Character{
@@ -13,8 +14,6 @@ public abstract class Character{
     protected Vector2 pixelCoords; //stores coords used for rendering on screen
     private float rot; //rotation in degrees (0/360 is north, clockwise)
     private float speed;
-    private int state; //stores the state of the charcter
-    private int animationFrame; //stores which frame of animation the charactrer is on
 
     public Character(int x, int y, String spritesheetPath){
         //clamp values based on map grid size
@@ -30,11 +29,8 @@ public abstract class Character{
         this.speed = 500;
         Gdx.app.log("Character", "New entity spawned in at (" + this.coords.x + ", " + this.coords.y + ")");
 
-        this.state = 0; //inital/idle
-        this.animationFrame = 0;
-
         this.spritesheet = new Texture(spritesheetPath);
-        this.sprite = new Sprite(this.spritesheet, this.animationFrame * 64, this.state * 64, 64, 64);
+        this.sprite = new Sprite(this.spritesheet, 64, 0, 64, 64);
     }
 
     /**
