@@ -52,8 +52,8 @@ public class PhysicsManager{
 
         Body enemyBody = world.createBody(bd);
 
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(width/2, length/2, new Vector2(width/2, length), 0);
+        CircleShape shape = new CircleShape();
+        shape.setRadius(width/2);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;

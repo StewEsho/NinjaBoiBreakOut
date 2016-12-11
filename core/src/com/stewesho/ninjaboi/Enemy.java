@@ -60,7 +60,7 @@ public class Enemy extends Character{
         this.rotAcc = 5;
 
         //inits body
-        this.body = NinjaBoiBreakOut.physicsManager.createEnemyBody(pixelCoords.x, pixelCoords.y, this.type.getWidth(), this.type.getLength());
+        this.body = NinjaBoiBreakOut.physicsManager.createEnemyBody(pixelCoords.x+32, pixelCoords.y+32, this.type.getWidth(), this.type.getLength());
 
         Gdx.app.log("enemy", this.type.getName() + " spawned at (" + x + ", " + y + ")");
     }
@@ -83,9 +83,9 @@ public class Enemy extends Character{
 
         this.sprite.setRotation(this.rot - 90);
         this.sprite.setOrigin(this.sprite.getWidth()/2,this.sprite.getHeight()/2);
-        this.body.setTransform(pixelCoords.x, pixelCoords.y, (this.rot - 90) * MathUtils.degreesToRadians);
-        this.sprite.setPosition(this.body.getPosition().x, this.body.getPosition().y);
+        this.sprite.setPosition(pixelCoords.x, pixelCoords.y);
 
+        this.body.setTransform(pixelCoords.x+32, pixelCoords.y+32, 0);
     }
 
     public boolean isDead(){ return this.isDead; }
