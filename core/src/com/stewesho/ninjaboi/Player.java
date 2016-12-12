@@ -37,6 +37,9 @@ public class Player extends Character{
     private PlayerState state;
     private long lastFireTime;
     public static int points;
+    public static int hp;
+    public static boolean isDead;
+    private Body body;
 
     public Player(int x, int y){
         super(x, y, "art/boi.png");
@@ -46,6 +49,9 @@ public class Player extends Character{
         this.shuriken = new Array(true, 10);
         this.lastFireTime = 0;
         this.points = 0;
+        this.hp = 100;
+        this.isDead = false;
+        this.body = NinjaBoiBreakOut.physicsManager.createPlayerBody(x, y);
     }
 
     /**
@@ -96,6 +102,7 @@ public class Player extends Character{
             move(0 , Gdx.graphics.getDeltaTime() * -getSpeed());
             state = state.WALKING;
         }
+        this.body.setTransform(this.getPixelCoords().x + 32, this.getPixelCoords().y + 32, 0);
     }
 
     public void aim(){
@@ -115,10 +122,16 @@ public class Player extends Character{
         points += 1;
     }
 
+    public static void doDamage(int dmg){
+        hp -= dmg;
+        NinjaBoiBreakOut.audio.playSFX(2, 0.5f);
+    }
+
     /**
      * GETTERS
      */
     public PlayerState getState() { return this.state; }
     public Array<Shuriken> getShurikens(){ return this.shuriken; }
     public int getPoints(){ return this.points; }
+    public int getHP(){ return this.hp; }
 }

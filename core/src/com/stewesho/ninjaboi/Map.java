@@ -32,8 +32,8 @@ enum Tile{
 public class Map{
     private Tile[][] map;
 
-    public static final int WIDTH  = 10;
-    public static final int HEIGHT = 12;
+    public static final int WIDTH  = 27;
+    public static final int HEIGHT = 27;
     public static final int PIXELWIDTH  = WIDTH * 64;
     public static final int PIXELHEIGHT = HEIGHT * 64;
 

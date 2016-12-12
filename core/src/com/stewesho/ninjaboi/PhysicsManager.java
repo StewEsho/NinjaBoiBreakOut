@@ -25,7 +25,7 @@ public class PhysicsManager {
 
     public void run(OrthographicCamera cam, Array<Shuriken> shurikenList, Array<Enemy> enemyList){
         this.world.step(1/45f, 6, 2);
-        // this.debugRenderer.render(world, cam.combined);
+        this.debugRenderer.render(world, cam.combined);
 
     }
 
@@ -58,11 +58,12 @@ public class PhysicsManager {
         Body playerBody = world.createBody(bd);
         playerBody.setUserData("player");
 
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(32, 8);
+        CircleShape shape = new CircleShape();
+        shape.setRadius(16);
 
         FixtureDef player = new FixtureDef();
         player.shape = shape;
+        player.isSensor = true;
         Fixture fixture = playerBody.createFixture(player);
 
         shape.dispose();
@@ -121,6 +122,11 @@ public class PhysicsManager {
                     Player.addPoints();
                     contact.getFixtureA().getBody().setUserData("dead");
                     contact.getFixtureB().getBody().setUserData("dead");
+                }
+
+                if((contact.getFixtureA().getBody().getUserData()=="player" && contact.getFixtureB().getBody().getUserData()=="enemy")
+                || (contact.getFixtureA().getBody().getUserData()=="enemy" && contact.getFixtureB().getBody().getUserData()=="player")){
+                    Player.doDamage(5);
                 }
 
             }

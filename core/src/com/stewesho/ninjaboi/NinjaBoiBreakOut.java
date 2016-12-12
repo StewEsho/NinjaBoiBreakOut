@@ -17,9 +17,11 @@ public class NinjaBoiBreakOut extends ApplicationAdapter {
     Map map;
 	Player player;
 	OrthographicCamera cam;
-	BitmapFont font;
+	BitmapFont pointsText;
+	BitmapFont hpText;
 
 	Sprite logo;
+	long currentTime;
 
 	@Override
 	public void create () {
@@ -28,15 +30,18 @@ public class NinjaBoiBreakOut extends ApplicationAdapter {
 		this.batch = new SpriteBatch();
 		this.physicsManager = new PhysicsManager();
   		this.map = new Map(); //level (just the one room)
-		this.player = new Player(5, 5);
+		this.player = new Player(Map.WIDTH/2, Map.HEIGHT/2);
 		this.cam = new OrthographicCamera(800, 450);
-		this.font = new BitmapFont(Gdx.files.internal("font/KomikaAxis.fnt"), Gdx.files.internal("font/KomikaAxis.png"), false);
+		this.pointsText = new BitmapFont(Gdx.files.internal("font/KomikaAxis.fnt"), Gdx.files.internal("font/KomikaAxis.png"), false);
+		this.hpText = new BitmapFont(Gdx.files.internal("font/KomikaAxis.fnt"), Gdx.files.internal("font/KomikaAxis.png"), false);
 
 		this.logo = new Sprite(new Texture("art/logo.png"));
 		this.logo.setSize(256, 256);
 		this.logo.setPosition(Map.PIXELWIDTH/2 - this.logo.getWidth()/2, Map.PIXELHEIGHT/2 - this.logo.getHeight()/2);
 
+		audio.stopSong();
 		audio.playSong();
+		this.currentTime = 0;
 	}
 
 	@Override
@@ -51,51 +56,80 @@ public class NinjaBoiBreakOut extends ApplicationAdapter {
 		//render graphics
 		batch.setProjectionMatrix(cam.combined);
 
-		batch.begin(); /////////////////////////////////
 
-        for (int i = Math.max(0, player.getX() - 10 ); i < Math.min(player.getX() + 10, map.WIDTH); i++){
-            for (int j = Math.max(0, player.getY() - 5 );j < Math.min(player.getY() + 5, map.HEIGHT); j++){
-                batch.draw(map.getTexture(i, j), i*64, j*64);
-            }
-        }
 
-		//spawns enemies
-		eMan.spawnCycle();
-		this.logo.draw(this.batch);
+		if(player.getHP() <= 0){
 
-		//draws the player
-		player.getSprite().draw(batch);
-		//draw shurikens
-		int index = 0;
-		for (Shuriken s : player.getShurikens()){
-			s.move();
-			s.draw(this.batch);
-			if (s.isDead()){
+			//kill shurikens
+			int index = 0;
+			for (Shuriken s : player.getShurikens()){
 				s.killBody();
 				player.getShurikens().removeIndex(index);
+				index++;
 			}
-			index++;
-		}
-		//draw enemies
-		index = 0;
-		for (Enemy e : eMan.getEnemyList()){
-			e.runAI();
-			e.draw(this.batch);
-			if (e.isDead()){
+			//kill enemies
+			index = 0;
+			for (Enemy e : eMan.getEnemyList()){
 				e.killBody();
 				eMan.getEnemyList().removeIndex(index);
+				index++;
 			}
-			index++;
+
+			audio.stopSong();
+
+			this.create();
+			this.currentTime = System.currentTimeMillis();
+
+		} else if (System.currentTimeMillis() - this.currentTime >= 200) {
+
+			batch.begin(); /////////////////////////////////
+
+			for (int i = Math.max(0, player.getX() - 10 ); i < Math.min(player.getX() + 10, map.WIDTH); i++){
+				for (int j = Math.max(0, player.getY() - 5 );j < Math.min(player.getY() + 5, map.HEIGHT); j++){
+					batch.draw(map.getTexture(i, j), i*64, j*64);
+				}
+			}
+
+			//spawns enemies
+			eMan.spawnCycle();
+			this.logo.draw(this.batch);
+
+			//draw shurikens
+			int index = 0;
+			for (Shuriken s : player.getShurikens()){
+				s.move();
+				s.draw(this.batch);
+				if (s.isDead()){
+					s.killBody();
+					player.getShurikens().removeIndex(index);
+				}
+				index++;
+			}
+			//draw enemies
+			index = 0;
+			for (Enemy e : eMan.getEnemyList()){
+				e.runAI();
+				e.draw(this.batch);
+				if (e.isDead()){
+					e.killBody();
+					eMan.getEnemyList().removeIndex(index);
+				}
+				index++;
+			}
+
+			//draws the player
+			player.getSprite().draw(batch);
+
+			this.pointsText.setColor(0.631f, 0.780f, 0.807f, 1.0f);
+			this.pointsText.draw(batch, "Targets Terminated: " + player.getPoints(), player.getPixelX() - 350, player.getPixelY() - 150);
+
+			this.pointsText.setColor(0.631f, 0.780f, 0.807f, 1.0f);
+			this.pointsText.draw(batch, "HP: " + player.getHP(), player.getPixelX(), player.getPixelY() - 150);
+			batch.end(); /////////////////////////////////
+
+			//run physics world step
+			physicsManager.run(cam, player.getShurikens(), eMan.getEnemyList());
 		}
-
-		font.setColor(0.631f, 0.780f, 0.807f, 1.0f);
-		font.draw(batch, "Targets Terminated: " + player.getPoints(), player.getPixelX() - 350, player.getPixelY() - 150);
-
-		batch.end(); /////////////////////////////////
-
-		//run physics world step
-		physicsManager.run(cam, player.getShurikens(), eMan.getEnemyList());
-
 	}
 
 	@Override
