@@ -58,7 +58,7 @@ public class Enemy extends Character{
         this.isDead = false;
 
         //inits kinematics fields
-        this.vel = 0;
+        this.vel = MathUtils.random(0, 40);
         this.acc = MathUtils.random(10, 25);
         this.rot = MathUtils.random(0, 360);
         this.rotVel = 2;

@@ -51,7 +51,7 @@ public class EnemyManager{
     public EnemyManager(){
         this.enemyList = new Array(true, 16);
         this.spawnTimer = 0;
-        this.spawnRate = 2000;
+        this.spawnRate = 500;
         this.timeSinceSpawn = this.spawnTimer + this.spawnRate + 5;
 
         this.maxEntities = 50;

@@ -7,6 +7,13 @@ import com.stewesho.ninjaboi.NinjaBoiBreakOut;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		new LwjglApplication(new NinjaBoiBreakOut(), "Ninja Boi: Break Out", 1024, 576);
+
+		config.title = "Ninja Boi: Break Out";
+		config.width = LwjglApplicationConfiguration.getDesktopDisplayMode().width;
+        config.height = LwjglApplicationConfiguration.getDesktopDisplayMode().height;
+		config.fullscreen = true;
+		config.resizable = false;
+		config.forceExit = true;
+		new LwjglApplication(new NinjaBoiBreakOut(), config);
 	}
 }
