@@ -25,7 +25,7 @@ public class PhysicsManager {
 
     public void run(OrthographicCamera cam, Array<Shuriken> shurikenList, Array<Enemy> enemyList){
         this.world.step(1/45f, 6, 2);
-        this.debugRenderer.render(world, cam.combined);
+        // this.debugRenderer.render(world, cam.combined);
 
     }
 
