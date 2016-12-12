@@ -19,6 +19,8 @@ public class NinjaBoiBreakOut extends ApplicationAdapter {
 	OrthographicCamera cam;
 	BitmapFont font;
 
+	Sprite logo;
+
 	@Override
 	public void create () {
 		this.audio = new AudioManager("music/maintheme.wav");
@@ -29,6 +31,10 @@ public class NinjaBoiBreakOut extends ApplicationAdapter {
 		this.player = new Player(5, 5);
 		this.cam = new OrthographicCamera(800, 450);
 		this.font = new BitmapFont(Gdx.files.internal("font/KomikaAxis.fnt"), Gdx.files.internal("font/KomikaAxis.png"), false);
+
+		this.logo = new Sprite(new Texture("art/logo.png"));
+		this.logo.setSize(256, 256);
+		this.logo.setPosition(Map.PIXELWIDTH/2 - this.logo.getWidth()/2, Map.PIXELHEIGHT/2 - this.logo.getHeight()/2);
 
 		audio.playSong();
 	}
@@ -55,6 +61,7 @@ public class NinjaBoiBreakOut extends ApplicationAdapter {
 
 		//spawns enemies
 		eMan.spawnCycle();
+		this.logo.draw(this.batch);
 
 		//draws the player
 		player.getSprite().draw(batch);
