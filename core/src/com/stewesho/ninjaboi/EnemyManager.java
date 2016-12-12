@@ -63,7 +63,7 @@ public class EnemyManager{
 
     public void spawnCycle(){
         if (this.spawnTimer - this.timeSinceSpawn > this.spawnRate && this.enemyList.size < this.maxEntities){
-            spawn(EnemyType.FLAMEO, MathUtils.random(1, Map.WIDTH), MathUtils.random(1, Map.HEIGHT));
+            spawn(EnemyType.FLAMEO, MathUtils.random(1, Map.WIDTH-1), MathUtils.random(1, Map.HEIGHT-1));
             this.timeSinceSpawn = System.currentTimeMillis();
         }
         this.spawnTimer = System.currentTimeMillis();

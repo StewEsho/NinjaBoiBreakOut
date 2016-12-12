@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
@@ -22,6 +23,7 @@ public class NinjaBoiBreakOut extends ApplicationAdapter {
 
 	Sprite logo;
 	long currentTime;
+	Pixmap cursorIcon;
 
 	@Override
 	public void create () {
@@ -42,6 +44,9 @@ public class NinjaBoiBreakOut extends ApplicationAdapter {
 		audio.stopSong();
 		audio.playSong();
 		this.currentTime = 0;
+
+		cursorIcon = new Pixmap(Gdx.files.internal("art/cursor.png"));
+		Gdx.graphics.setCursor(Gdx.graphics.newCursor(cursorIcon, 0, 0));
 	}
 
 	@Override
